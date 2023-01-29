@@ -168,6 +168,12 @@ class Tree{
         
         return !(rightTotal-leftTotal > 1 || leftTotal - rightTotal > 1)
     }
+
+    rebalance(node){
+        let arr = this.inorder(node);
+        arr = this.cleanArray(arr);
+        return this.buildTree(arr);
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -181,18 +187,53 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 }
 
 // Testing the functions of Tree
-const arr = [4, 10, 12, 15, 18, 22, 24, 25, 31, 35, 44, 50, 66, 70, 90];
+const testing = () => {
+    const arr = [4, 10, 12, 15, 18, 22, 24, 25, 31, 35, 44, 50, 66, 70, 90];
+    const tree = new Tree(arr);
+    tree.root = tree.insert(28, tree.root);
+    tree.root = tree.insert(29, tree.root);
+    tree.root = tree.insert(30, tree.root);
+    prettyPrint(tree.root);
+    tree.root = tree.delete(22, tree.root);
+    prettyPrint(tree.root);
+    console.log("The find function found the value: " , tree.find(18, tree.root))
+    console.log(tree.levelOrder());
+    console.log("Inorder = ", tree.inorder(tree.root));
+    console.log("Preorder = ", tree.preorder(tree.root));
+    console.log("Postorder = ", tree.postorder(tree.root));
+    console.log("The height of the root node is - ", tree.height(tree.root))
+    console.log("The depth of the node with value of 15 is - ", tree.depth(tree.find(4, tree.root)));
+    console.log("Is the tree balanced? ", tree.isBalanced(tree.root));
+    let newRoot = tree.rebalance(tree.root);
+    prettyPrint(newRoot);
+}
+
+//testing();
+
+function randomArr(){
+    let arr = [];
+    for(let i = 0; i < 24; i ++){
+        arr.push(Math.ceil(Math.random(100)*100));
+    }
+    return arr;
+}
+
+// Driver script to test functions all work
+let arr = randomArr();
 const tree = new Tree(arr);
-tree.root = tree.insert(28, tree.root);
-//tree.root = tree.insert(29, tree.root);
-//prettyPrint(tree.root);
-//tree.root = tree.delete(33, tree.root);
-prettyPrint(tree.root);
-//console.log("The find function found the value: " , tree.find(8, tree.root).value)
-console.log(tree.levelOrder());
+console.log("Is the tree balanced? ", tree.isBalanced(tree.root));
 console.log("Inorder = ", tree.inorder(tree.root));
 console.log("Preorder = ", tree.preorder(tree.root));
 console.log("Postorder = ", tree.postorder(tree.root));
-console.log("The height of the root node is - ", tree.height(tree.root))
-console.log("The depth of the node with value of 15 is - ", tree.depth(tree.find(4, tree.root)));
+tree.root = tree.insert(128, tree.root);
+tree.root = tree.insert(129, tree.root);
+tree.root = tree.insert(130, tree.root);
+tree.root = tree.insert(131, tree.root);
+tree.root = tree.insert(132, tree.root);
+tree.root = tree.insert(133, tree.root);
 console.log("Is the tree balanced? ", tree.isBalanced(tree.root));
+let balancedTree = tree.rebalance(tree.root);
+console.log("Is the tree balanced? ", tree.isBalanced(balancedTree));
+console.log("Inorder = ", tree.inorder(tree.root));
+console.log("Preorder = ", tree.preorder(tree.root));
+console.log("Postorder = ", tree.postorder(tree.root));
