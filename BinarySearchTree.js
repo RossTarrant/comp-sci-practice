@@ -126,6 +126,7 @@ class Tree{
     }
 
     height(node){
+        // Base case
         if(node===null){
             return -1;
         }
@@ -138,6 +139,24 @@ class Tree{
         else{
             return rightTotal + 1;
         }
+    }
+
+    depth(toFind, node = this.root){
+        // Base case
+        if(toFind===node || node===null){
+            return 0;
+        }
+        let count = 0;
+        while(toFind !== node){
+            count++;
+            if(node.value > toFind.value){
+                node = node.leftNode;
+            }
+            else if(node.value < toFind.value){
+                node = node.rightNode;
+            }
+        }
+        return count;
     }
 }
 
@@ -155,7 +174,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 const arr = [4, 10, 12, 15, 18, 22, 24, 25, 31, 35, 44, 50, 66, 70, 90];
 const tree = new Tree(arr);
 tree.root = tree.insert(30, tree.root);
-prettyPrint(tree.root);
+//prettyPrint(tree.root);
 //tree.root = tree.delete(33, tree.root);
 prettyPrint(tree.root);
 //console.log("The find function found the value: " , tree.find(8, tree.root).value)
@@ -164,3 +183,4 @@ console.log("Inorder = ", tree.inorder(tree.root));
 console.log("Preorder = ", tree.preorder(tree.root));
 console.log("Postorder = ", tree.postorder(tree.root));
 console.log("The height of the root node is - ", tree.height(tree.root))
+console.log("The depth of the node with value of 15 is - ", tree.depth(tree.find(4, tree.root)));
